@@ -1,2 +1,4 @@
 
 .sconf_temp/
+.sconsign.dblite
+build/host/include/Config.h
