@@ -4,12 +4,14 @@
 #include <errno.h>
 #include <unistd.h>
 #include "Wait.h"
+#include <sys/wait.h>
+#include <sys/types.h>
 
 Wait::Wait(int argc, char **argv)
     : POSIXApplication(argc, argv)
 {
-    parser().setDescription("Stop executing for some time");
-    parser().registerPositional("SECONDS", "Stop executing for the given number of seconds");
+    parser().setDescription("Stop executing until giving application finishes");
+    parser().registerPositional("PID", "Stop executing until application with given PID finishes");
 }
 
 Wait::~Wait()
@@ -18,21 +20,18 @@ Wait::~Wait()
 
 Wait::Result Wait::exec()
 {
-    int sec = 0;
+    int pid;
+    int status;
 
-    // Convert input to seconds
-    if ((sec = atoi(arguments().get("SECONDS"))) <= 0)
+    // Convert input to pid
+    if ((pid = atoi(arguments().get("PID"))) < 0)
     {
-        ERROR("invalid sleep time `" << arguments().get("SECONDS") << "'");
+        ERROR("invalid pid `" << arguments().get("PID") << "'");
         return InvalidArgument;
     }
 
-    // Sleep now
-    if (sleep(sec) != 0)
-    {
-        ERROR("failed to sleep: " << strerror(errno));
-        return IOError;
-    }
+    // Wait now
+    waitpid(pid, &status, 0);
 
     // Done
     return Success;
