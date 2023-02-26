@@ -31,7 +31,11 @@ Wait::Result Wait::exec()
     }
 
     // Wait now
-    waitpid(pid, &status, 0);
+    if (waitpid(pid, &status, 0) == -1)
+    {
+        ERROR("failed to wait: " << strerror(errno));
+        return IOError;
+    }
 
     // Done
     return Success;
