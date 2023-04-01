@@ -250,12 +250,12 @@
 #define VERSION_SUFFIX ""
 #define VERSION "1.0.3"
 #define VERSIONCODE 65539
-#define RELEASE "1.0.3-git(1b07426)*"
+#define RELEASE "1.0.3-git(29f44a5)*"
 #define FREENOS 1
 #define COMPILER_VERSION "gcc (Ubuntu 11.3.0-1ubuntu1~22.04) 11.3.0"
 #define BUILDUSER "root"
 #define BUILDHOST "DESKTOP-JS2GOCI"
-#define BUILDOS "Linux 5.15.79.1-microsoft-standard-WSL2"
+#define BUILDOS "Linux 5.15.90.1-microsoft-standard-WSL2"
 #define BUILDARCH "x86_64"
 #define BUILDPY "Python 3.10.6"
 #define BUILDER "SCons 4.0.1"
