@@ -82,6 +82,12 @@ Process::State Process::getState() const
     return m_state;
 }
 
+// Gets our priority level
+int Process::getPriority()
+{
+    return priority;
+}
+
 ProcessShares & Process::getShares()
 {
     return m_shares;
@@ -105,6 +111,15 @@ bool Process::isPrivileged() const
 void Process::setParent(ProcessID id)
 {
     m_parent = id;
+}
+
+void Process::setPriority(int prio){
+    if(prio > 0 && prio < 6){
+        priority = prio;
+    }
+    else{
+        // Error
+    }
 }
 
 Process::Result Process::wait(ProcessID id)
@@ -174,6 +189,10 @@ Process::Result Process::initialize()
     Memory::Range range;
     Arch::Cache cache;
     Allocator::Range allocPhys, allocVirt;
+
+    //Look for potential other places for this to be, might not be correct
+    //Add Priority Level, Range: 1-5, Default: 3
+    int priority = 3;
 
     // Create new kernel event channel object
     m_kernelChannel = new MemoryChannel(Channel::Producer, sizeof(ProcessEvent));

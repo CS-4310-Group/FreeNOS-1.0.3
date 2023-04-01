@@ -127,6 +127,13 @@ class Process
     State getState() const;
 
     /**
+     * Retrieves the current Priority.
+     *
+     * @return Current Priority of the Process.
+     */
+    int getPriority();
+
+    /**
      * Get MMU memory context.
      *
      * @return MemoryContext pointer.
@@ -241,7 +248,15 @@ class Process
      */
     void setParent(ProcessID id);
 
+    /**
+     * Set process Priority.
+     */
+    void setPriority(int prio);
+
   protected:
+
+    /** Priority Level */
+    int priority;
 
     /** Process Identifier */
     const ProcessID m_id;
