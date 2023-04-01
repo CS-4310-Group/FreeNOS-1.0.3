@@ -26,6 +26,7 @@
 Process::Process(ProcessID id, Address entry, bool privileged, const MemoryMap &map)
     : m_id(id), m_map(map), m_shares(id)
 {
+    m_priority      = Default;
     m_state         = Stopped;
     m_parent        = 0;
     m_waitId        = 0;
@@ -85,7 +86,7 @@ Process::State Process::getState() const
 // Gets our priority level
 int Process::getPriority()
 {
-    return priority;
+    return (int)m_priority;
 }
 
 ProcessShares & Process::getShares()
@@ -113,13 +114,15 @@ void Process::setParent(ProcessID id)
     m_parent = id;
 }
 
-void Process::setPriority(int prio){
-    if(prio > 0 && prio < 6){
-        priority = prio;
+// Sets our priority level with a range of 1-5
+bool Process::setPriority(int prio){
+    if( prio > 5 or prio < 1){
+        return false;
     }
-    else{
-        // Error
-    }
+
+    // Set new Priority Level
+    m_priority = (PriorityLevel)prio;
+    return true;
 }
 
 Process::Result Process::wait(ProcessID id)
@@ -190,9 +193,6 @@ Process::Result Process::initialize()
     Arch::Cache cache;
     Allocator::Range allocPhys, allocVirt;
 
-    //Look for potential other places for this to be, might not be correct
-    //Add Priority Level, Range: 1-5, Default: 3
-    int priority = 3;
 
     // Create new kernel event channel object
     m_kernelChannel = new MemoryChannel(Channel::Producer, sizeof(ProcessEvent));

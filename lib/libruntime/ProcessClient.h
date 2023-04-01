@@ -66,6 +66,7 @@ class ProcessClient
 
         /** Textual state of the process */
         String textState;
+
     }
     Info;
 
@@ -120,6 +121,7 @@ class ProcessClient
      *         or ANY if none found.
      */
     ProcessID findProcess(const String program) const;
+
 
   private:
 

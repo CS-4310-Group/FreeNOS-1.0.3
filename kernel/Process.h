@@ -71,6 +71,14 @@ class Process
         Stopped
     };
 
+    enum PriorityLevel{
+      Min = 1,
+      Less = 2,
+      Default = 3,
+      More = 4,
+      Max = 5
+    };
+
   public:
 
     /**
@@ -251,12 +259,12 @@ class Process
     /**
      * Set process Priority.
      */
-    void setPriority(int prio);
+    bool setPriority(int prio);
 
   protected:
 
     /** Priority Level */
-    int priority;
+    PriorityLevel m_priority;
 
     /** Process Identifier */
     const ProcessID m_id;

@@ -34,6 +34,7 @@ ProcessID ProcessClient::getParentID() const
     return m_parent;
 }
 
+
 ProcessClient::Result ProcessClient::processInfo(const ProcessID pid,
                                                  ProcessClient::Info &info) const
 {
