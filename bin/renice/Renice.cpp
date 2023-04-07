@@ -3,8 +3,9 @@
 #include <string.h>
 #include <ProcessClient.h>
 #include <errno.h>
-#include <unistd.h>
 #include "Renice.h"
+#include <libposix/unistd.h>
+
 
 Renice::Renice(int argc, char **argv)
     : POSIXApplication(argc, argv)
@@ -39,10 +40,6 @@ Renice::Result Renice::exec()
         
     }
     
-
-    
-
-
 
     return Success;
 }
