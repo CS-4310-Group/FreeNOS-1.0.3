@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ProcessClient.h>
 #include <errno.h>
 #include <unistd.h>
 #include "Renice.h"
@@ -17,6 +18,7 @@ Renice::Renice(int argc, char **argv)
 Renice::Result Renice::exec()
 {
     int pid;
+    int priority;
 
     //Input Checking
     if ((pid = atoi(arguments().get("PID"))) < 0)
@@ -25,7 +27,17 @@ Renice::Result Renice::exec()
         return InvalidArgument;
     }
 
-
+    if ((arguments().get("new")))
+    {
+        int priority = atoi(arguments().get("PRIO"));
+        int pid = atoi(arguments().get("PID"));
+        if(renicepid(pid, priority)) 
+            {
+                ERROR("failed to change priority: " << strerror(errno));
+                return IOError;
+            }
+        
+    }
     
 
     
