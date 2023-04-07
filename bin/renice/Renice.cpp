@@ -1,70 +1,36 @@
-
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <unistd.h>
 #include "Renice.h"
 
 Renice::Renice(int argc, char **argv)
     : POSIXApplication(argc, argv)
 {
-    parser().setDescription("Output system process list");
-    parser().registerFlag('l', "list", "List of priority levels");
+    parser().setDescription("Change priority of process");
+    parser().registerFlag('n', "new", "New priority level");
+    parser().registerPositional("PRIO", "The updated priority of the process");
+    parser().registerPositional("PID", "The changing process' ID");
 }
 
-ProcessList::Result ProcessList::exec()
+Renice::Result Renice::exec()
 {
-    const ProcessClient process;
-    String out;
+    int pid;
 
-    if(arguments().get("list")){
-        out << "ID  PARENT  PRIORITY  USER GROUP STATUS     CMD\r\n";
-
-        // Loop processes
-        for (ProcessID pid = 0; pid < ProcessClient::MaximumProcesses; pid++)
-        {
-            ProcessClient::Info info;
-
-            const ProcessClient::Result result = process.processInfo(pid, info);
-            if (result == ProcessClient::Success)
-            {
-                DEBUG("PID " << pid << " state = " << *info.textState);
-
-                // Output a line
-                char line[128];
-                snprintf(line, sizeof(line),
-                        "%3d %7d %9d %4d %5d %10s %32s\r\n",
-                        pid, info.kernelState.parent, info.kernelState.priority,
-                        0, 0, *info.textState, *info.command);
-                out << line;
-            }
-        }
-    }
-    else{
-        // Print header
-        out << "ID  PARENT  USER GROUP STATUS     CMD\r\n";
-
-        // Loop processes
-        for (ProcessID pid = 0; pid < ProcessClient::MaximumProcesses; pid++)
-        {
-            ProcessClient::Info info;
-
-            const ProcessClient::Result result = process.processInfo(pid, info);
-            if (result == ProcessClient::Success)
-            {
-                DEBUG("PID " << pid << " state = " << *info.textState);
-
-                // Output a line
-                char line[128];
-                snprintf(line, sizeof(line),
-                        "%3d %7d %4d %5d %10s %32s\r\n",
-                        pid, info.kernelState.parent,
-                        0, 0, *info.textState, *info.command);
-                out << line;
-            }
-        }
-
+    //Input Checking
+    if ((pid = atoi(arguments().get("PID"))) < 0)
+    {
+        ERROR("invalid pid `" << arguments().get("PID") << "'");
+        return InvalidArgument;
     }
 
 
-    // Output the table
-    write(1, *out, out.length());
+    
+
+    
+
+
+
     return Success;
 }
