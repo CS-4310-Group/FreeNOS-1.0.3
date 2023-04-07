@@ -34,7 +34,8 @@ sc: <br />
 •Main.cpp<br />
 •SConscript<br />
 •SlowCalc.cpp<br />
-•SlowCalc.h<br />
+•SlowCalc.h <br />
+<br />
 kernel:<br />
 •Scheduler.cpp<br />
 •Scheduler.h<br />
