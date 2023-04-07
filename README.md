@@ -30,7 +30,7 @@ renice:<br />
 •Renice.h<br />
 •SConscript<br />
 <br />
-	sc: <br />
+sc: <br />
 •Main.cpp<br />
 •SConscript<br />
 •SlowCalc.cpp<br />
@@ -49,10 +49,10 @@ lib:<br />
 •renicepid.cpp<br />
 -----------------------------------------------------------<br />
 Comments:<br />
-- Priority level changes make the slow_calcs repeat the result with a different process ID due to the ML Algorithm scheduling.<br />
+•Priority level changes make the slow_calcs repeat the result with a different process ID due to the ML Algorithm scheduling.<br />
 -----------------------------------------------------------<br />
 Contributions: <br />
-- Matthew: Priority levels<br />
-- Gabriel: Renice<br />
-- Parker: Scheduler<br />
+•Matthew: Priority levels<br />
+•Gabriel: Renice<br />
+•Parker: Scheduler<br />
 -----------------------------------------------------------<br />
