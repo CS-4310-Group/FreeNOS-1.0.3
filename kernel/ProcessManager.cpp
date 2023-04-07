@@ -97,6 +97,11 @@ Process * ProcessManager::get(const ProcessID id)
     return m_procs.get(id);
 }
 
+void ProcessManager::setPriority(Process *proc, int prio)
+{
+    proc->setPriority(prio);
+}
+
 void ProcessManager::remove(Process *proc, const uint exitStatus)
 {
     if (proc == m_idle)

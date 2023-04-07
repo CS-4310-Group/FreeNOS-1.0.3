@@ -92,7 +92,7 @@ class ProcessManager
      * @return Pointer to the appropriate process or ZERO if not found.
      */
     Process * get(const ProcessID id);
-
+    void ProcessManager::setPriority(Process *proc, int prio);
     /**
      * Remove a Process.
      */
