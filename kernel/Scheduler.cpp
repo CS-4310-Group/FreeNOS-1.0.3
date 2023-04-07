@@ -69,7 +69,7 @@ Scheduler::Result Scheduler::dequeue(Process *proc, bool ignoreState)
 
     Size count;
 
-    for (int prio_i = 0; prio_i < 5; prio_i++){
+    for (int prio_i = 4; prio_i >= 0; prio_i--){
         count = prioQueues[prio_i].count();
 
         for(Size i = 0; i < count; i++){
@@ -97,14 +97,29 @@ Process * Scheduler::select()
 {
     Process *p;
 
-    for(int i = 4; i >= 0; i--) {
-        if(prioQueues[i].count() > 0) {
-            p = prioQueues[i].pop();
-            prioQueues[i].push(p);
-            return p;
-        }
-        
+
+    if(prioQueues[4].count() > 0) {
+        p = prioQueues[4].pop();
+        prioQueues[4].push(p);
+        return p;
+    }else if(prioQueues[3].count() > 0) {
+        p = prioQueues[3].pop();
+        prioQueues[3].push(p);
+        return p;
+    }else if(prioQueues[2].count() > 0) {
+        p = prioQueues[2].pop();
+        prioQueues[2].push(p);
+        return p;
+    }else if(prioQueues[1].count() > 0) {
+        p = prioQueues[1].pop();
+        prioQueues[1].push(p);
+        return p;
+    }else if(prioQueues[0].count() > 0) {
+        p = prioQueues[0].pop();
+        prioQueues[0].push(p);
+        return p;
     }
+
 
     return (Process *) NULL;
 }
