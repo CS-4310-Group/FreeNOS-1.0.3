@@ -4,7 +4,7 @@
 #include <ProcessClient.h>
 #include <errno.h>
 #include "Renice.h"
-#include <libposix/unistd.h>
+#include <unistd.h>
 
 
 Renice::Renice(int argc, char **argv)
