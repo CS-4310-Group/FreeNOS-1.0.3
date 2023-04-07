@@ -30,7 +30,7 @@ renice:<br />
 •Renice.h<br />
 •SConscript<br />
 <br />
-	sc:<br />
+	sc: <br />
 •Main.cpp<br />
 •SConscript<br />
 •SlowCalc.cpp<br />
