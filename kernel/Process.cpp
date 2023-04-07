@@ -26,7 +26,7 @@
 Process::Process(ProcessID id, Address entry, bool privileged, const MemoryMap &map)
     : m_id(id), m_map(map), m_shares(id)
 {
-    m_priority      = Default;
+    m_priority      = 3;
     m_state         = Stopped;
     m_parent        = 0;
     m_waitId        = 0;
@@ -121,7 +121,7 @@ bool Process::setPriority(int prio){
     }
 
     // Set new Priority Level
-    m_priority = (PriorityLevel)prio;
+    m_priority = prio;
     return true;
 }
 

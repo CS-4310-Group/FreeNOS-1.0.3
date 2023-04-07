@@ -21,12 +21,23 @@
 
 Scheduler::Scheduler()
 {
+
+    prioQueues[0] = m_q_1;
+    prioQueues[1] = m_q_2;
+    prioQueues[2] = m_q_3;
+    prioQueues[3] = m_q_4;
+    prioQueues[4] = m_q_5;
+
     DEBUG("");
 }
 
 Size Scheduler::count() const
 {
-    return m_queue.count();
+    return prioQueues[0].count()
+         + prioQueues[1].count()
+         + prioQueues[2].count()
+         + prioQueues[3].count()
+         + prioQueues[4].count();
 }
 
 Scheduler::Result Scheduler::enqueue(Process *proc, bool ignoreState)
@@ -37,7 +48,13 @@ Scheduler::Result Scheduler::enqueue(Process *proc, bool ignoreState)
         return InvalidArgument;
     }
 
-    m_queue.push(proc);
+    int priority = proc->getPriority();
+    if(priority < 1 || priority > 5) {
+        ERROR("invalid priority");
+        return InvalidArgument;
+    }
+
+    prioQueues[priority-1].push(proc);
     return Success;
 }
 
@@ -49,31 +66,44 @@ Scheduler::Result Scheduler::dequeue(Process *proc, bool ignoreState)
         return InvalidArgument;
     }
 
-    Size count = m_queue.count();
 
-    // Traverse the Queue to remove the Process
-    for (Size i = 0; i < count; i++)
-    {
-        Process *p = m_queue.pop();
+    Size count;
 
-        if (p == proc)
-            return Success;
-        else
-            m_queue.push(p);
+    for (int prio_i = 0; prio_i < 5; prio_i++){
+        count = prioQueues[prio_i].count();
+
+        for(Size i = 0; i < count; i++){
+            Process *p = prioQueues[prio_i].pop();
+
+            if (p == proc)
+                return Success;
+            else{
+                if(prio_i > 0)
+                    prioQueues[prio_i-1].push(p);
+                else
+                    prioQueues[0].push(p);
+            }
+                
+        }
     }
 
+
+   
     FATAL("process ID " << proc->getID() << " is not in the schedule");
     return InvalidArgument;
 }
 
 Process * Scheduler::select()
 {
-    if (m_queue.count() > 0)
-    {
-        Process *p = m_queue.pop();
-        m_queue.push(p);
+    Process *p;
 
-        return p;
+    for(int i = 4; i >= 0; i--) {
+        if(prioQueues[i].count() > 0) {
+            p = prioQueues[i].pop();
+            prioQueues[i].push(p);
+            return p;
+        }
+        
     }
 
     return (Process *) NULL;

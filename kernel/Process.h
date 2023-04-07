@@ -71,13 +71,7 @@ class Process
         Stopped
     };
 
-    enum PriorityLevel{
-      Min = 1,
-      Less = 2,
-      Default = 3,
-      More = 4,
-      Max = 5
-    };
+
 
   public:
 
@@ -264,7 +258,7 @@ class Process
   protected:
 
     /** Priority Level */
-    PriorityLevel m_priority;
+    u8 m_priority;
 
     /** Process Identifier */
     const ProcessID m_id;

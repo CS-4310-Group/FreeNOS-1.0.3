@@ -54,6 +54,7 @@ SlowCalc::Result SlowCalc::exec()
                 }
     }
 
+    printf("This slow calc %d is completed.\n",n);
     // Done
     return Success;
 }
