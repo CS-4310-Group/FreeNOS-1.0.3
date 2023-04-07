@@ -38,6 +38,11 @@ bin:<br />
 kernel:<br />
 - Scheduler.cpp<br />
 - Scheduler.h<br />
+- ProcessManager.cpp<br />
+- ProcessManager.h<br />
+API:<br />
+- ProcessCTL.cpp<br />
+- ProcessCTL.h<br />
 <br />
 lib:<br />
 	libposix:<br />
