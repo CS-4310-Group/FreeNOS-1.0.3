@@ -9,7 +9,7 @@ Video Link:<br />
 https://youtu.be/k6vZTCHSsl8/<br />
 -----------------------------------------------------------<br />
 Features:<br />
-	-Changing priority levels of processes<br />
+- Changing priority levels of processes<br />
 	User Input Error Checking<br />
 	ML Algorithm Scheduling<br />
 	Error Checking for Unsuccessful Priority Changes<br />
